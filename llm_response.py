@@ -2,10 +2,20 @@ import requests
 import os
 import requests
 import simpleaudio
+import base64
+
 
 api_key = os.getenv("OPENAI_API_KEY")
-def get_llm_response(question):
-    #encoded_image = encode_image(path)
+
+
+def encode_image(path):
+    image = open(path, "rb")
+    return base64.b64encode(image.read()).decode('utf8')
+
+
+
+def get_llm_response(question,image_path):
+    encoded_image = encode_image(image_path)
 
     headers = {
         "Content-Type": "application/json",
@@ -15,7 +25,8 @@ def get_llm_response(question):
     message = {
         "role": "user",
         "content": [
-            {"type": "text", "text": f"Answer this question with up to three sentences: {question}"},
+            {"type": "text", "text": f"Respond to this statement by the user with up to three sentences, use the image below for additional information and context: {question}"},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpg;base64,{encoded_image}", "detail": "low"}}
         ]
     }
 
