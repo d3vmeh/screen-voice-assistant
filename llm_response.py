@@ -25,7 +25,7 @@ def get_llm_response(question,image_path):
     message = {
         "role": "user",
         "content": [
-            {"type": "text", "text": f"Respond to this statement by the user with up to three sentences, use the image below for additional information and context: {question}"},
+            {"type": "text", "text": f"Respond to this statement by the user in up to two sentences, use the image below for additional information and context: {question}"},
             {"type": "image_url", "image_url": {"url": f"data:image/jpg;base64,{encoded_image}", "detail": "low"}}
         ]
     }
